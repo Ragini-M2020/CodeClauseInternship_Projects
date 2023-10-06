@@ -1,1 +1,4 @@
-
+I have developed a URL shortener using Python and the pyshorteners library. 
+This project allows users to convert long URLs into shorter, more manageable links.
+The core of this project is the pyshorteners library, which provides a simple way to interact with various URL shortening services, 
+such as Bit.ly, TinyURL, and many more.
