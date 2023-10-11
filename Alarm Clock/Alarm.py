@@ -1,58 +1,31 @@
-import datetime
-import simpleaudio as sa
 import tkinter as tk
-from tkinter import messagebox
-from tkinter import PhotoImage  # Import the PhotoImage class from tkinter
-from PIL import Image, ImageTk  # Import the required classes from Pillow
+import time
+import pygame
 
-# Function to check the alarm
-def check_alarm():
-    alarm_hour = int(entry_hour.get())
-    alarm_minute = int(entry_minute.get())
-    alarm_am_pm = var_am_pm.get()
-
-    if alarm_am_pm == "pm":
-        alarm_hour += 12
-
-    current_time = datetime.datetime.now()
-    if alarm_hour == current_time.hour and alarm_minute == current_time.minute:
-        messagebox.showinfo("Alarm", "Time to wake up!")
+def set_alarm():
+    alarm_time = entry.get()
+    current_time = time.strftime('%H:%M:%S')
+    
+    if alarm_time == current_time:
         play_alarm_sound()
+    else:
+        root.after(1000, set_alarm)
 
-# Function to play the alarm sound
 def play_alarm_sound():
-    wave_obj = sa.WaveObject.from_wave_file("mixkit-digital-clock-digital-alarm-buzzer-992.wav")
-    play_obj = wave_obj.play()
-    play_obj.wait_done()
-
-# Create the main window
+    pygame.mixer.init()
+    pygame.mixer.music.load("are-you-sleeping-classical-a-123605.mp3") 
+    pygame.mixer.music.play()
+    
 root = tk.Tk()
 root.title("Alarm Clock")
 
-# Load and display the background image
-bg_image = Image.open("image.png")
-bg_photo = ImageTk.PhotoImage(bg_image)
-bg_label = tk.Label(root, image=bg_photo)
-bg_label.place(relwidth=1, relheight=1)
+label = tk.Label(root, text="Enter alarm time (HH:MM:SS):")
+label.pack()
 
-# Create and configure GUI elements
-label_hour = tk.Label(root, text="Hour:", bg="white")
-label_minute = tk.Label(root, text="Minute:", bg="white")
-entry_hour = tk.Entry(root)
-entry_minute = tk.Entry(root)
-var_am_pm = tk.StringVar(value="am")
-radio_am = tk.Radiobutton(root, text="AM", variable=var_am_pm, value="am", bg="white")
-radio_pm = tk.Radiobutton(root, text="PM", variable=var_am_pm, value="pm", bg="white")
-button_set_alarm = tk.Button(root, text="Set Alarm", command=check_alarm)
+entry = tk.Entry(root)
+entry.pack()
 
-# Arrange GUI elements using a grid layout
-label_hour.grid(row=0, column=0, padx=10, pady=10)
-entry_hour.grid(row=0, column=1, padx=10, pady=10)
-label_minute.grid(row=1, column=0, padx=10, pady=10)
-entry_minute.grid(row=1, column=1, padx=10, pady=10)
-radio_am.grid(row=2, column=0, padx=10, pady=10)
-radio_pm.grid(row=2, column=1, padx=10, pady=10)
-button_set_alarm.grid(row=3, columnspan=2, padx=10, pady=10)
+button = tk.Button(root, text="Set Alarm", command=set_alarm)
+button.pack()
 
-# Start the Tkinter main loop
 root.mainloop()
