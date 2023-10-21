@@ -4,4 +4,4 @@ In this repository I will be uploading my projects which i will be making during
 PROJECTS ARE :-
   1. URL-SHORTENER
   2. ALARM CLOCK
-  3. VOICE ASSISTANT.
+  3. VOICE ASSISTANT
